@@ -19,4 +19,4 @@ struct ListNode* deleteDuplicates(struct ListNode* head) {
         curr=curr->next;}
    }
    return head;
-}
+} 
