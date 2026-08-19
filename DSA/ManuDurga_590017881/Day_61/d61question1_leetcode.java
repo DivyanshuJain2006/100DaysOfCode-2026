@@ -28,5 +28,6 @@ public class d61question1_leetcode {
             System.out.print(": ");
             Arr1[j][i]=sc.nextInt();}}
     System.out.println(findJudge(k, Arr1));
+    sc.close();
         }
 }
