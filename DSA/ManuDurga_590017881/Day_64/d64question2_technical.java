@@ -2,8 +2,6 @@ package Day_64;
 
 import java.util.*;
 
-import java.util.*;
-
 public class d64question2_technical {
     static class TreeNode {
         int val;
