@@ -1,4 +1,4 @@
-//Need to find the lowest common ancestor of two employees
+//Need to count root to leaf paths whose digits can form a palindrome
 
 #include <iostream>
 #include <vector>
@@ -53,47 +53,30 @@ Node* buildTree(vector<int>& arr)
     return root;
 }
 
-bool exists(Node* root, int value)
+int countPaths(Node* root, int mask)
 {
     if (root == nullptr)
-        return false;
+        return 0;
 
-    if (root->data == value)
-        return true;
+    mask ^= (1 << root->data);
 
-    return exists(root->left, value) || exists(root->right, value);
-}
+    if (root->left == nullptr && root->right == nullptr)
+    {
+        // at most one digit can have an odd frequency
+        return (mask & (mask - 1)) == 0 ? 1 : 0;
+    }
 
-Node* lca(Node* root, int a, int b)
-{
-    if (root == nullptr || root->data == a || root->data == b)
-        return root;
-
-    Node* left = lca(root->left, a, b);
-    Node* right = lca(root->right, a, b);
-
-    if (left != nullptr && right != nullptr)
-        return root;
-
-    return left != nullptr ? left : right;
+    return countPaths(root->left, mask) +
+           countPaths(root->right, mask);
 }
 
 int main()
 {
-    vector<int> tree = {3, 5, 1, 6, 2, 0, 8, -1, -1, 7, 4};
-
-    int a = 5;
-    int b = 1;
+    vector<int> tree = {2, 3, 1, 3, 1, -1, 1};
 
     Node* root = buildTree(tree);
 
-    if (!exists(root, a) || !exists(root, b))
-    {
-        cout << -1;
-        return 0;
-    }
-
-    cout << lca(root, a, b)->data;
+    cout << countPaths(root, 0);
 
     return 0;
 }
