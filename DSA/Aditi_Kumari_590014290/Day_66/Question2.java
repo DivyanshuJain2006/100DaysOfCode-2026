@@ -1,0 +1,62 @@
+package Day_66;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Question2 {
+    public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
+        List<Integer> list1 = new ArrayList<>();
+        List<Integer> list2 = new ArrayList<>();
+
+        inorder(root1, list1);
+        inorder(root2, list2);
+
+        List<Integer> result = new ArrayList<>();
+
+        int i = 0, j = 0;
+
+        while (i < list1.size() && j < list2.size()) {
+            int value;
+
+            if (list1.get(i) < list2.get(j)) {
+                value = list1.get(i++);
+            } else if (list1.get(i) > list2.get(j)) {
+                value = list2.get(j++);
+            } else {
+                value = list1.get(i);
+                i++;
+                j++;
+            }
+
+            if (result.isEmpty() || result.get(result.size() - 1) != value) {
+                result.add(value);
+            }
+        }
+
+        while (i < list1.size()) {
+            int value = list1.get(i++);
+            if (result.isEmpty() || result.get(result.size() - 1) != value) {
+                result.add(value);
+            }
+        }
+
+        while (j < list2.size()) {
+            int value = list2.get(j++);
+            if (result.isEmpty() || result.get(result.size() - 1) != value) {
+                result.add(value);
+            }
+        }
+
+        return result;
+    }
+
+    private void inorder(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+
+        inorder(root.left, list);
+        list.add(root.val);
+        inorder(root.right, list);
+    }
+}
