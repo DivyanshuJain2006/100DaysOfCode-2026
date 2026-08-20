@@ -1,4 +1,4 @@
-//Need to find the lowest common ancestor of two employees
+//Need to count nodes that are never smaller than anything before them
 
 #include <iostream>
 #include <vector>
@@ -53,47 +53,32 @@ Node* buildTree(vector<int>& arr)
     return root;
 }
 
-bool exists(Node* root, int value)
+int countSafe(Node* root, int maxValue)
 {
     if (root == nullptr)
-        return false;
+        return 0;
 
-    if (root->data == value)
-        return true;
+    int count = 0;
 
-    return exists(root->left, value) || exists(root->right, value);
-}
+    if (root->data >= maxValue)
+    {
+        count = 1;
+        maxValue = root->data;
+    }
 
-Node* lca(Node* root, int a, int b)
-{
-    if (root == nullptr || root->data == a || root->data == b)
-        return root;
+    count += countSafe(root->left, maxValue);
+    count += countSafe(root->right, maxValue);
 
-    Node* left = lca(root->left, a, b);
-    Node* right = lca(root->right, a, b);
-
-    if (left != nullptr && right != nullptr)
-        return root;
-
-    return left != nullptr ? left : right;
+    return count;
 }
 
 int main()
 {
-    vector<int> tree = {3, 5, 1, 6, 2, 0, 8, -1, -1, 7, 4};
-
-    int a = 5;
-    int b = 1;
+    vector<int> tree = {3, 1, 4, 3, -1, 1, 5};
 
     Node* root = buildTree(tree);
 
-    if (!exists(root, a) || !exists(root, b))
-    {
-        cout << -1;
-        return 0;
-    }
-
-    cout << lca(root, a, b)->data;
+    cout << countSafe(root, root->data);
 
     return 0;
 }
