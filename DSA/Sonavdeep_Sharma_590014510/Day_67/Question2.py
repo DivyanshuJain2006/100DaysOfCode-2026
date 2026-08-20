@@ -13,7 +13,7 @@ while stack:
 
     left = mid - l
     right = r - mid
-
+    
     if left == right:
         count[1] += 1
     elif left > right:
