@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class BalanceSpectrum {
+public class Question2 {
 
     static class Node {
         int val;
