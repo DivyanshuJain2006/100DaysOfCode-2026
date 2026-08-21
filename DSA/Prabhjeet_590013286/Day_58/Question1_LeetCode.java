@@ -1,8 +1,4 @@
-/**
- * LeetCode 222 - Count Complete Tree Nodes
- */
-
-//Need to count nodes in a complete binary tree without visiting every node
+//Need to count nodes without visiting every node
 
 class Solution {
 
@@ -12,18 +8,18 @@ class Solution {
             return 0;
         }
 
-        int leftHeight = getLeftHeight(root);
-        int rightHeight = getRightHeight(root);
+        int left = leftHeight(root);
+        int right = rightHeight(root);
 
-        // perfect tree, so nodes can be counted directly
-        if (leftHeight == rightHeight) {
-            return (1 << leftHeight) - 1;
+        // perfect tree can be counted directly
+        if (left == right) {
+            return (1 << left) - 1;
         }
 
         return 1 + countNodes(root.left) + countNodes(root.right);
     }
 
-    private int getLeftHeight(TreeNode node) {
+    private int leftHeight(TreeNode node) {
 
         int height = 0;
 
@@ -35,7 +31,7 @@ class Solution {
         return height;
     }
 
-    private int getRightHeight(TreeNode node) {
+    private int rightHeight(TreeNode node) {
 
         int height = 0;
 
