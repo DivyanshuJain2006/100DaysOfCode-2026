@@ -1,8 +1,9 @@
-//Need to find the lowest common ancestor of two employees
+//Need to find the maximum money without robbing adjacent houses
 
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <algorithm>
 using namespace std;
 
 struct Node
@@ -53,47 +54,30 @@ Node* buildTree(vector<int>& arr)
     return root;
 }
 
-bool exists(Node* root, int value)
+pair<int, int> rob(Node* root)
 {
     if (root == nullptr)
-        return false;
+        return {0, 0};
 
-    if (root->data == value)
-        return true;
+    auto left = rob(root->left);
+    auto right = rob(root->right);
 
-    return exists(root->left, value) || exists(root->right, value);
-}
+    int take = root->data + left.second + right.second;
+    int skip = max(left.first, left.second) +
+               max(right.first, right.second);
 
-Node* lca(Node* root, int a, int b)
-{
-    if (root == nullptr || root->data == a || root->data == b)
-        return root;
-
-    Node* left = lca(root->left, a, b);
-    Node* right = lca(root->right, a, b);
-
-    if (left != nullptr && right != nullptr)
-        return root;
-
-    return left != nullptr ? left : right;
+    return {take, skip};
 }
 
 int main()
 {
-    vector<int> tree = {3, 5, 1, 6, 2, 0, 8, -1, -1, 7, 4};
-
-    int a = 5;
-    int b = 1;
+    vector<int> tree = {3, 2, 3, -1, 3, -1, 1};
 
     Node* root = buildTree(tree);
 
-    if (!exists(root, a) || !exists(root, b))
-    {
-        cout << -1;
-        return 0;
-    }
+    auto ans = rob(root);
 
-    cout << lca(root, a, b)->data;
+    cout << max(ans.first, ans.second);
 
     return 0;
 }
