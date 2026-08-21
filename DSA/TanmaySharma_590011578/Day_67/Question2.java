@@ -44,5 +44,6 @@ public class Question2 {
         int[] result = countBalance(arr);
 
         System.out.println(Arrays.toString(result));
+        sc.close();
     }
 }
