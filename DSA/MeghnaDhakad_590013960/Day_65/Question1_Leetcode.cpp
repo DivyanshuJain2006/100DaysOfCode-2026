@@ -1,32 +1,37 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
+private:
+    int currentVal = 0;
+    int currentCount = 0;
+    int maxCount = 0;
+    vector<int> modes;
+
+    void inorder(TreeNode* root) {
+        if (!root) return;
+        
+        inorder(root->left);
+        
+        // Process current node
+        if (root->val == currentVal) {
+            currentCount++;
+        } else {
+            currentVal = root->val;
+            currentCount = 1;
+        }
+        
+        // Update modes
+        if (currentCount > maxCount) {
+            maxCount = currentCount;
+            modes = {currentVal}; // Overwrite with new max
+        } else if (currentCount == maxCount) {
+            modes.push_back(currentVal); // Add tied mode
+        }
+        
+        inorder(root->right);
+    }
+
 public:
-    int rangeSumBST(TreeNode* root, int low, int high) {
-        if (!root) return 0;
-        
-        // Prune the left subtree if current value is too small
-        if (root->val < low) {
-            return rangeSumBST(root->right, low, high);
-        }
-        
-        // Prune the right subtree if current value is too large
-        if (root->val > high) {
-            return rangeSumBST(root->left, low, high);
-        }
-        
-        // If within range, add the current value and process both children
-        return root->val + 
-               rangeSumBST(root->left, low, high) + 
-               rangeSumBST(root->right, low, high);
+    vector<int> findMode(TreeNode* root) {
+        inorder(root);
+        return modes;
     }
 };
