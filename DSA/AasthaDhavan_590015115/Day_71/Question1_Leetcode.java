@@ -1,32 +1,21 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
-    public TreeNode bstFromPreorder(int[] preorder) {
-        return helper(preorder,0,preorder.length);
-    }
-    public TreeNode helper(int[] preorder,int rootidx,int r){
-        if(rootidx>=r) return null;
-        int val=preorder[rootidx];
-        TreeNode root=new TreeNode(val);
-        int i=rootidx+1;
-        while(i<=preorder.length-1 && preorder[i]<val){
-            i++;
+    public int findJudge(int n, int[][] trust) {
+        int len=trust.length;
+        if(len<n-1){
+            return -1;
         }
-        root.left=helper(preorder,rootidx+1,i);
-        root.right=helper(preorder,i,r);
-        return root;
+        int []indeg=new int[n+1];
+        int []outdeg=new int[n+1];
+    for(int i=0;i<len;i++){
+        outdeg[trust[i][0]]++; //in
+        indeg[trust[i][1]]++; //out
+    }
+
+    for(int i=1;i<=n;i++){
+        if(outdeg[i]==0 && indeg[i]==n-1){
+            return i;
+        }
+    }
+    return -1;
     }
 }
