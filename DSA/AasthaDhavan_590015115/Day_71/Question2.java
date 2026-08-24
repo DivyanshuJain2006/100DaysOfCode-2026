@@ -1,61 +1,30 @@
 import java.util.*;
-public class Question2 {
-    static class TreeNode {
-        int val;
-        TreeNode left, right;
-        TreeNode(int val) {
-            this.val = val;
+class Question2 {
+    public static int findJudge(int n, int[][] trust) {
+        int[] inDegree = new int[n + 1];
+        int[] outDegree = new int[n + 1];
+        for (int[] t : trust) {
+            int a = t[0];
+            int b = t[1];
+            outDegree[a]++;
+            inDegree[b]++;
         }
+        for (int i = 1; i <= n; i++) {
+            if (outDegree[i] == 0 && inDegree[i] == n - 1) {
+                return i;
+            }
+        }
+        return -1;
     }
-
-    static TreeNode[] splitBST(TreeNode root, int k) {
-
-        if (root == null) {
-            return new TreeNode[]{null, null};
-        }
-
-        if (root.val < k) {
-            TreeNode[] result = splitBST(root.right, k);
-            root.right = result[0];
-            return new TreeNode[]{root, result[1]};
-        } else {
-
-            TreeNode[] result = splitBST(root.left, k);
-            root.left = result[1];
-            return new TreeNode[]{result[0], root};
-        }
-    }
-
-    static void preorder(TreeNode root, StringBuilder sb) {
-        if (root == null) {
-            return;
-        }
-        sb.append(root.val).append(" ");
-        preorder(root.left, sb);
-        preorder(root.right, sb);
-    }
-
-    static String getPreorder(TreeNode root) {
-        if (root == null) {
-            return "EMPTY";
-        }
-        StringBuilder sb = new StringBuilder();
-        preorder(root, sb);
-        return sb.toString().trim();
-    }
-
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(10);
-        root.left = new TreeNode(5);
-        root.right = new TreeNode(15);
-        root.left.left = new TreeNode(2);
-        root.left.right = new TreeNode(7);
-        root.right.left = new TreeNode(12);
-        root.right.right = new TreeNode(20);
-        int k = 10;
-        TreeNode[] result = splitBST(root, k);
-
-        System.out.println(getPreorder(result[0]));
-        System.out.println(getPreorder(result[1]));
+        int n = 5;
+        int[][] trust = {
+            {1, 3},
+            {2, 3},
+            {4, 3},
+            {5, 3},
+            {1, 2}
+        };
+        System.out.println(findJudge(n, trust));
     }
 }
