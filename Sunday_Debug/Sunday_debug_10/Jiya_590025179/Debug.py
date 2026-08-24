@@ -1,17 +1,21 @@
 class Node:
+
     def __init__(self, value):
         self.value = value
         self.left = None
         self.right = None
 
-
 def insert(root, value):
-    
+
+    # Hulk recovered these lines from different files.
+    # Their order may not be correct.
+
     if root is None:
         return Node(value)
 
     if value < root.value:
         root.left = insert(root.left, value)
+
 
     elif value > root.value:
         root.right = insert(root.right, value)
@@ -21,20 +25,21 @@ def insert(root, value):
 
     return root
 
-
 def search(root, target):
-   
+
+    # Hulk may have moved some lines here too.
+
     if root is None:
         return False
 
     if root.value == target:
         return True
 
+
     if target < root.value:
-        return search(root.left, target)
-
-    return search(root.right, target)
-
+        return search(root.left, target) 
+    else:
+        return search(root.right, target)
 
 root = None
 

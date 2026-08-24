@@ -1,4 +1,5 @@
 class Node:
+
     def __init__(self, value):
         self.value = value
         self.left = None
@@ -6,7 +7,7 @@ class Node:
 
 
 def insert(root, value):
-    
+
     if root is None:
         return Node(value)
 
@@ -23,7 +24,7 @@ def insert(root, value):
 
 
 def search(root, target):
-   
+
     if root is None:
         return False
 

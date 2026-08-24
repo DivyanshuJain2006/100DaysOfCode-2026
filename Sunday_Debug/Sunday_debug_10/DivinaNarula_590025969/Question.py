@@ -6,7 +6,6 @@ class Node:
 
 
 def insert(root, value):
-    
     if root is None:
         return Node(value)
 
@@ -16,14 +15,10 @@ def insert(root, value):
     elif value > root.value:
         root.right = insert(root.right, value)
 
-    elif value == root.value:
-        return root
-
     return root
 
 
 def search(root, target):
-   
     if root is None:
         return False
 
