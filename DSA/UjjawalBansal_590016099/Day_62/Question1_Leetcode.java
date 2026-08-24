@@ -1,0 +1,10 @@
+public class Question1_Leetcode {
+    public boolean evaluateTree(TreeNode root) {
+        if (root.left == null && root.right == null) {
+            return root.val == 1;
+        }
+        boolean l = evaluateTree(root.left);
+        boolean r = evaluateTree(root.right);
+        return root.val == 2 ? (l || r) : (l && r);
+    }
+}
